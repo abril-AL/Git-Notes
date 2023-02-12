@@ -1,0 +1,59 @@
+- Getting a Repository
+	- 2 main ways - turn local directory into a git repository or `clone` an existing repository 
+- initializing existing directory
+	- first cd to that directory
+	- do: `git init`
+	- nothing is tracked at that point, but everything after will be
+- cloning existing
+	- `git clone consolehttps://github.com/link-to-repo`
+	- name it something else
+		- `git clone https://github.com/cloning myName
+- can use some other transfer protocols ( `git://` or ssh )
+
+## Recording Changes
+- tracked files - files in the last snapshot, git knows about them
+- untracked files -any files in working directory not in staging area
+
+- Checking status
+	- `git status`
+	- can determine state of files
+	- lists untracked files, new files, modified files, etc
+- Tracking new files
+	- will be listed as `new file:`
+	- will be in next commit
+- Staging Modified Files
+	- will be listed as `modified:`
+	- can list a tracked file, and list modified as unstaged, stages only how the file looked when it was added, modified version of the file will be listed as unstaged
+- Short Status
+	- `git status -s`
+	- simplified version of status cmd
+	- `??` means untracked , `A` means added to staging area , `M` means modified
+- Ignoring Files
+	- files we dont want git to add automatically or list as untracked
+	- can tell git to ignore files with a listing pattern
+		- ex `*.[oa]*` means ignore `.o` or `.a` files
+		- glob patterns
+- Viewing staged and unstaged changes
+	- `git diff` shows exact lines added and removed
+	- `git diff --staged` - compared your staged changes to your last commit
+- Commiting Changes
+	- `git commit`
+	- commits all staged files
+	- `git commit -m "text describing commit"`
+- Skipping the staging area
+	- `git commit -a`
+	- makes git automatically stage every file that is already tracked before doing the commit
+	- skip the `add` part
+- Removing Files
+	- have to remove it from tracked files ( from staging area )
+	- `git rm` remove from tracked files *and* from working directory so you dont see it as a tracked file
+	- just removing from working directory will list it as `deleted: ` in the unstaged area of `status`
+	- `git rm` will stage the removal next commit will delete it
+		- `-f` will force it, use if you modified or already added it tostaging area
+		- safety feature to prevent accidental removal not yet recorded
+	- if you want to keep the file in working tree but not in ataging area, use `cached` option
+		- `got rm --cached filename`
+		- can pas files, directories or globs
+- Moving Files
+	- renaming in git, `git mv file_from file_to
+	- same as doing a `mv oldname newname`, `rm oldname` and `add newname`
