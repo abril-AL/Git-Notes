@@ -57,3 +57,91 @@
 - Moving Files
 	- renaming in git, `git mv file_from file_to
 	- same as doing a `mv oldname newname`, `rm oldname` and `add newname`
+
+## Viewing Commit History
+- want to look back at history of commits ( of lclones also )
+- use `git log`
+	- will list in reverse chronological order 
+- patch option `-p --patch`
+	- shows the difference introduced in each commit
+	- Displays same information with diff following each entry
+- abbreviated stats, use `--stat`
+	- prints a list of modified files, how many were changed, number lf lines added/removed, and a summary of the info at the end
+- pretty option `--pretty=format_choice`
+	- different format 
+	- useful formats: `format` - get to specify, `oneline`, `graph` , 
+	- `git log --pretty=format:"%h - %an, %ar : %s"` also useful
+		- there are also other specifiers
+- Limiting Log Output
+	- can list only a subset of commits
+	- ex `-2` will only list last commits, or `-<n>`
+	- `-- since and --until`
+		- list based on specified time 
+	- filer to match criteria 
+		- ex `--authorm or --grep or --all-match`
+		- `-S <string>` option, lists commits that changed that string
+		- can pass a directory, lists changes to files in that dir `git log -- path/to/file`
+
+## Undoing Things
+- careful, you ant always undo these changes
+- Common mistakes: committed to early, forgot to add some files, mess up commit message
+- `git commit --amend`
+	- redo the commit
+	- takes staging area and uses it for commit, if no changes were made it only changes the message
+	- end up with a single commit]
+- unstaging a staged file
+	- `git reset HEAD file_to_unstage`
+	- file is modified but once again unstaged
+- unmodyfying a modified file
+	- `git checkout -- file-to-unmodify`
+	- removes from staging area
+	- if you want to keep the changes while still removing from staging area
+		- better option is branching (?)
+- undoing things with git restore
+	- `git restore --staged` - alternate to `git reset`
+	- `git restore ` - discard changes
+- `git status` will tell you the commands for these operations
+- restore is a dangerous cmd, gets rid of local changes
+
+## Working with remotes
+- remote repository is a repo hosted over the internet/other network
+- will push and pull from these repositories
+- Showing your remotes
+	- `git remote` - lists remotes (shorthands)
+	- `-v` shows full URLs 
+- Adding remote repositories
+	- `git remote add <shortname> <url>`
+- Fetching and Pulling from Your Remotes
+	- `git fetch <remote>`
+	- pulls the data you dont have yet, only adds to local repository
+	- if you used `clone` , automaically sets up your local `master` branch to track remote `master` branch
+	- `git pull` fetches from server you originally cloned from and tries to merge it into what youre currently working on
+- Pushing to remotes
+	- `git push <remote> <branch>` 
+	- only works if u have write access and nobody has pushed in the meantime
+- Inspecting a remote
+	- `git remote show <remote>`
+- Renaming and removing remotes
+	- `git remote rename` to change remote shorthand
+		- changes all remote-tracking branch names
+	- `git remote remove` or `git remove rm`
+		- removes all remote tracking branches and configuration
+
+## Tagging
+- tag specific points in the repo history
+- listing - `git tag`, can use  matches too`git tag -l "string"`
+- Creating 
+	- annotated `-a` , stored as full object, contain message (`-m`), lot of other useful information
+	- lightweight tags `-lw`,  basically the commit checksum stored in a file, no other information is kept, only supply a name ( no `-m -a or -s`)
+- Can tag past commits after u passed them as well
+- Sharing tags
+	- `git push` doesnt automatically transfer tags to remote servers, run `git push origin <tagname>`
+	- `git push origin --tags` push all the tags that are not already ob the remote server
+- Deleting tags
+	- `git checkout <tagname>` , view the versions of files a tag is pointing to
+
+## Git Aliases
+- set up alias for commands if u dont want to type them out all the way
+- `git config --global alias.alias_name command_name`
+	- ex `git config --global alias.ci commit`, ci instead of commit
+- can also create commands that you think are useful
